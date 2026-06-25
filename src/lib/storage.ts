@@ -24,6 +24,15 @@ export function addRecentWorkspace(id: string, name: string): void {
   localStorage.setItem(KEYS.RECENT_WORKSPACES, JSON.stringify(list.slice(0, 10)));
 }
 
+export function removeRecentWorkspace(id: string): void {
+  const list = getRecentWorkspaces().filter((x) => x.id !== id);
+  localStorage.setItem(KEYS.RECENT_WORKSPACES, JSON.stringify(list));
+}
+
+export function clearActiveWorkspace(): void {
+  localStorage.removeItem(KEYS.ACTIVE_WORKSPACE);
+}
+
 export function getActiveWorkspace(): { id: string; key: string } | null {
   try {
     return JSON.parse(localStorage.getItem(KEYS.ACTIVE_WORKSPACE) || "null");

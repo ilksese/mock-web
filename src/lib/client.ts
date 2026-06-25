@@ -28,6 +28,9 @@ export const api = {
 
   getWorkspace: (id: string) => request<any>(`/workspaces/${id}`),
 
+  deleteWorkspace: (id: string) =>
+    request<any>(`/workspaces/${id}`, { method: "DELETE" }),
+
   getEndpoints: (wsId: string) =>
     request<any[]>(`/workspaces/${wsId}/endpoints`),
 

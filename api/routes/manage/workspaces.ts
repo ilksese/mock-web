@@ -56,4 +56,12 @@ ws.put("/:id", async (c) => {
   return c.json(updated);
 });
 
+ws.delete("/:id", async (c) => {
+  const { id } = c.req.param();
+  const existed = await db.query.workspaces.findFirst({ where: eq(workspaces.id, id) });
+  if (!existed) return c.json({ error: "Not Found" }, 404);
+  await db.delete(workspaces).where(eq(workspaces.id, id));
+  return c.json({ success: true });
+});
+
 export const workspaceRoutes = ws;

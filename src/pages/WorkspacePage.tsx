@@ -1,11 +1,12 @@
 import { createSignal, createResource, createEffect, Show, For } from "solid-js";
-import { useParams } from "@solidjs/router";
+import { useParams, useNavigate } from "@solidjs/router";
 import WorkspaceHeader from "../components/workspace/WorkspaceHeader";
 import EndpointList from "../components/endpoint/EndpointList";
 import CreateEndpointModal from "../components/endpoint/CreateEndpointModal";
 import Button from "../components/ui/Button";
 import Skeleton from "../components/ui/Skeleton";
 import { api } from "../lib/client";
+import { removeRecentWorkspace, clearActiveWorkspace } from "../lib/storage";
 import { useWorkspaceStore } from "../store/workspace";
 
 function HeaderSkeleton() {
@@ -15,7 +16,10 @@ function HeaderSkeleton() {
         <Skeleton width="200px" height="24px" radius="4px" style={{ "margin-bottom": "8px" }} />
         <Skeleton width="300px" height="14px" radius="4px" />
       </div>
-      <Skeleton width="90px" height="32px" radius="var(--rounded-sm)" />
+      <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+        <Skeleton width="90px" height="32px" radius="var(--rounded-sm)" />
+        <Skeleton width="140px" height="32px" radius="var(--rounded-sm)" />
+      </div>
     </div>
   );
 }
@@ -50,6 +54,7 @@ function EndpointCardSkeleton() {
 
 export default function WorkspacePage() {
   const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = createSignal(false);
   const { setWorkspace } = useWorkspaceStore();
 
@@ -63,6 +68,13 @@ export default function WorkspacePage() {
     }
   });
 
+  const handleDelete = async () => {
+    await api.deleteWorkspace(params.id);
+    removeRecentWorkspace(params.id);
+    clearActiveWorkspace();
+    navigate("/", { replace: true });
+  };
+
   const handleCreated = () => {
     refetch();
   };
@@ -71,7 +83,7 @@ export default function WorkspacePage() {
     <div>
       <Show when={!workspace.loading} fallback={<HeaderSkeleton />}>
         <Show when={workspace()}>
-          <WorkspaceHeader name={workspace()!.name} manageKey={workspace()!.manageKey} />
+          <WorkspaceHeader name={workspace()!.name} manageKey={workspace()!.manageKey} onDelete={handleDelete} />
         </Show>
       </Show>
 
