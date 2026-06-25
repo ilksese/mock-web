@@ -147,3 +147,20 @@ const path = url.pathname;
 // CORRECT:
 const path = c.req.path;
 ```
+
+### Vercel function signature — use named HTTP exports, not default (2026-06-25)
+
+`export default handle(app)` uses the legacy `(req, res) => void` signature. Vercel warns the returned `Response` is ignored. Export named HTTP methods instead:
+
+```ts
+// WRONG:
+export default handle(app);
+
+// CORRECT:
+const handler = handle(app);
+export const GET = handler;
+export const POST = handler;
+export const PUT = handler;
+export const DELETE = handler;
+export const PATCH = handler;
+```
