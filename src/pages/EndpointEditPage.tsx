@@ -1,4 +1,4 @@
-import { createSignal, createResource, Show } from "solid-js";
+import { createSignal, createResource, createMemo, Show } from "solid-js";
 import { useParams } from "@solidjs/router";
 import EndpointInfoBar from "../components/endpoint/EndpointInfoBar";
 import ResponseRuleList from "../components/response/ResponseRuleList";
@@ -27,7 +27,7 @@ export default function EndpointEditPage() {
     ({ wsId, epId }) => api.getEndpoint(wsId, epId)
   );
 
-  const rules = () => endpoint()?.responseRules ?? [];
+  const rules = createMemo(() => endpoint()?.responseRules ?? []);
 
   const handleEdit = (rule: Rule) => {
     setEditingRule(rule);
