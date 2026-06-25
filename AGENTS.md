@@ -134,3 +134,16 @@ import { db } from "../db/index.js";
 ```
 
 `npm run dev:api` and `npx tsc --noEmit` do NOT catch this — only `vercel dev` or actual deployment does.
+
+### Vercel environment — `c.req.url` is relative, not absolute (2026-06-25)
+
+In Vercel serverless, `c.req.url` returns a relative path like `/_manage/workspaces` instead of a full URL. `new URL(c.req.url)` throws `ERR_INVALID_URL`. Use `c.req.path` for pathname directly.
+
+```ts
+// WRONG — throws on Vercel:
+const url = new URL(c.req.url);
+const path = url.pathname;
+
+// CORRECT:
+const path = c.req.path;
+```

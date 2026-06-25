@@ -25,8 +25,7 @@ function matchesConditions(conditions: Record<string, any>, c: Context): boolean
 
 export async function serveMock(c: Context) {
   const method = c.req.method;
-  const url = new URL(c.req.url);
-  const path = url.pathname;
+  const path = c.req.path;
 
   const cacheKey = `mock:${method}:${path}`;
   const cached = getCached(cacheKey);
