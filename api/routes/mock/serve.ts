@@ -1,8 +1,8 @@
 import type { Context } from "hono";
-import { db } from "../../db";
-import { endpoints, responseRules } from "../../db/schema";
+import { db } from "../../db/index.js";
+import { endpoints, responseRules } from "../../db/schema.js";
 import { and, eq } from "drizzle-orm";
-import { getCached, setCache } from "../../middleware/cache";
+import { getCached, setCache } from "../../middleware/cache.js";
 
 function matchesConditions(conditions: Record<string, any>, c: Context): boolean {
   if (!conditions || Object.keys(conditions).length === 0) return true;

@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { db } from "../../db";
-import { workspaces } from "../../db/schema";
+import { db } from "../../db/index.js";
+import { workspaces } from "../../db/schema.js";
 import { eq } from "drizzle-orm";
-import { workspaceAuth } from "../../middleware/auth";
+import { workspaceAuth } from "../../middleware/auth.js";
 
 function generateSlug(name: string): string {
   const id = crypto.randomUUID ? crypto.randomUUID().slice(0, 6) : Math.random().toString(36).slice(2, 8);

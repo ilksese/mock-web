@@ -120,3 +120,17 @@ Every page or component that loads data via `createResource` MUST render skeleto
 - Skeleton layout MUST mimic the real component's dimensions and structure to avoid layout shift
 - Use fixed skeleton item counts (4 endpoint cards, 3 rule cards) — not adaptive
 - Empty-state copy ("No endpoints yet") renders ONLY after loading completes AND data is empty
+
+### Vercel deployment — ESM relative imports MUST have `.js` extension (2026-06-25)
+
+Vercel's Node.js ESM runtime compiles TypeScript to JavaScript but preserves the directory structure (`api/index.ts` → `/var/task/api/index.js`). **Every relative import MUST include the `.js` extension**, otherwise you get `ERR_MODULE_NOT_FOUND` at runtime.
+
+```ts
+// WRONG — works locally (esbuild auto-resolve) but fails on Vercel:
+import { db } from "../db";
+
+// CORRECT:
+import { db } from "../db/index.js";
+```
+
+`npm run dev:api` and `npx tsc --noEmit` do NOT catch this — only `vercel dev` or actual deployment does.

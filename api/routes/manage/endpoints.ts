@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { db } from "../../db";
-import { endpoints, workspaces } from "../../db/schema";
+import { db } from "../../db/index.js";
+import { endpoints, workspaces } from "../../db/schema.js";
 import { eq, and } from "drizzle-orm";
-import { workspaceAuth } from "../../middleware/auth";
+import { workspaceAuth } from "../../middleware/auth.js";
 
 const VALID_METHODS = ["GET", "POST", "PUT", "DELETE", "PATCH"] as const;
 

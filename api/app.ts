@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { workspaceRoutes } from "./routes/manage/workspaces";
-import { endpointRoutes } from "./routes/manage/endpoints";
-import { responseRoutes } from "./routes/manage/responses";
-import { serveMock } from "./routes/mock/serve";
+import { workspaceRoutes } from "./routes/manage/workspaces.js";
+import { endpointRoutes } from "./routes/manage/endpoints.js";
+import { responseRoutes } from "./routes/manage/responses.js";
+import { serveMock } from "./routes/mock/serve.js";
 
 export const app = new Hono().basePath("/");
 

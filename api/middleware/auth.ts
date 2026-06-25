@@ -1,6 +1,6 @@
 import type { Context, Next } from "hono";
-import { db } from "../db";
-import { workspaces } from "../db/schema";
+import { db } from "../db/index.js";
+import { workspaces } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
 export async function workspaceAuth(c: Context, next: Next) {
