@@ -1,0 +1,38 @@
+{
+  "name": "mock-web",
+  "version": "1.0.0",
+  "description": "mock data online",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilksese/mock-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ilksese/mock-web/issues"
+  },
+  "homepage": "https://github.com/ilksese/mock-web#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@solidjs/router": "^0.16.1",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.27",
+    "solid-js": "^1.9.13"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.0",
+    "vite-plugin-solid": "^2.11.12"
+  }
+}
