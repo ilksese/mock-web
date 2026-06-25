@@ -3,17 +3,24 @@ const KEYS = {
   ACTIVE_WORKSPACE: "mockweb_active_workspace",
 };
 
-export function getRecentWorkspaces(): string[] {
+export interface RecentWorkspace {
+  id: string;
+  name: string;
+}
+
+export function getRecentWorkspaces(): RecentWorkspace[] {
   try {
-    return JSON.parse(localStorage.getItem(KEYS.RECENT_WORKSPACES) || "[]");
+    const raw = JSON.parse(localStorage.getItem(KEYS.RECENT_WORKSPACES) || "[]");
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((x) => x && typeof x.id === "string" && typeof x.name === "string");
   } catch {
     return [];
   }
 }
 
-export function addRecentWorkspace(id: string): void {
-  const list = getRecentWorkspaces().filter((x) => x !== id);
-  list.unshift(id);
+export function addRecentWorkspace(id: string, name: string): void {
+  const list = getRecentWorkspaces().filter((x) => x.id !== id);
+  list.unshift({ id, name });
   localStorage.setItem(KEYS.RECENT_WORKSPACES, JSON.stringify(list.slice(0, 10)));
 }
 

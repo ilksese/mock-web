@@ -6,9 +6,9 @@ const [currentWorkspace, setCurrentWorkspace] = createSignal<{ id: string; key: 
 );
 
 export function useWorkspaceStore() {
-  const setWorkspace = (id: string, key: string) => {
+  const setWorkspace = (id: string, key: string, name?: string) => {
     setActiveWorkspace(id, key);
-    addRecentWorkspace(id);
+    if (name) addRecentWorkspace(id, name);
     setCurrentWorkspace({ id, key });
   };
 

@@ -1,6 +1,11 @@
+import { createMemo } from "solid-js";
+import { A } from "@solidjs/router";
 import WorkspaceCreateCard from "../components/workspace/WorkspaceCreateCard";
+import { getRecentWorkspaces } from "../lib/storage";
 
 export default function HomePage() {
+  const recents = createMemo(() => getRecentWorkspaces());
+
   return (
     <div>
       <section
@@ -49,6 +54,34 @@ export default function HomePage() {
       </section>
 
       <WorkspaceCreateCard />
+
+      {recents().length > 0 && (
+        <section style={{ "max-width": "480px", margin: "var(--spacing-4xl) auto 0" }}>
+          <h3 style={{ "font-size": "14px", "font-weight": "600", "text-transform": "uppercase", "letter-spacing": "1px", color: "var(--color-mute)", "margin-bottom": "var(--spacing-lg)" }}>
+            Recent Workspaces
+          </h3>
+          <div style={{ display: "flex", "flex-direction": "column", gap: "var(--spacing-sm)" }}>
+            {recents().map((ws) => (
+              <A
+                href={`/workspace/${ws.id}`}
+                style={{
+                  display: "block",
+                  padding: "var(--spacing-md) var(--spacing-lg)",
+                  background: "var(--color-canvas-soft)",
+                  border: "1px solid var(--color-hairline)",
+                  "border-radius": "var(--rounded-sm)",
+                  "text-decoration": "none",
+                  color: "var(--color-ink-strong)",
+                  "font-size": "14px",
+                  transition: "border-color 0.15s",
+                }}
+              >
+                {ws.name}
+              </A>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div
         style={{

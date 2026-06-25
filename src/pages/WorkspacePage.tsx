@@ -1,17 +1,26 @@
-import { createSignal, createResource, Show } from "solid-js";
+import { createSignal, createResource, createEffect, Show } from "solid-js";
 import { useParams } from "@solidjs/router";
 import WorkspaceHeader from "../components/workspace/WorkspaceHeader";
 import EndpointList from "../components/endpoint/EndpointList";
 import CreateEndpointModal from "../components/endpoint/CreateEndpointModal";
 import Button from "../components/ui/Button";
 import { api } from "../lib/client";
+import { useWorkspaceStore } from "../store/workspace";
 
 export default function WorkspacePage() {
   const params = useParams<{ id: string }>();
   const [modalOpen, setModalOpen] = createSignal(false);
+  const { setWorkspace } = useWorkspaceStore();
 
   const [workspace] = createResource(() => params.id, api.getWorkspace);
   const [endpoints, { refetch }] = createResource(() => params.id, api.getEndpoints);
+
+  createEffect(() => {
+    const ws = workspace();
+    if (ws) {
+      setWorkspace(ws.id, ws.manageKey, ws.name);
+    }
+  });
 
   const handleCreated = () => {
     refetch();

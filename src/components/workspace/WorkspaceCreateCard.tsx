@@ -20,7 +20,7 @@ export default function WorkspaceCreateCard() {
     setLoading(true);
     try {
       const ws = await api.createWorkspace(name().trim());
-      setWorkspace(ws.id, ws.manageKey);
+      setWorkspace(ws.id, ws.manageKey, ws.name);
       setShowKey(ws.manageKey);
       toast.add("Workspace created!", "success");
       navigate(`/workspace/${ws.id}`);
