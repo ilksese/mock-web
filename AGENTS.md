@@ -55,3 +55,48 @@ src/   → SolidJS SPA
 - **Env**: No dotenv. `DATABASE_URL` via CLI or Vercel dashboard.
 
 ## Notes
+
+## Lessons Learned (from dev testing 2026-06-25)
+
+### SolidJS Reactivity — the #1 pitfall in this codebase
+
+SolidJS component functions run **ONCE** (unlike React). Only signals accessed inside reactive contexts (`<Show>`, `<For>`, `createMemo`, `createEffect`, JSX expressions) re-run when dependencies change.
+
+**BANNED patterns** (all caused bugs in this codebase):
+- `if (!props.open) return null;` in component body → evaluated once, never re-evaluates. Use `<Show when={props.open}>`.
+- `if (props.rules.length === 0) return <Fallback/>` → same problem. Use `<Show when={props.rules.length > 0} fallback={<Fallback/>}>`.
+- `const rules = () => endpoint()?.responseRules ?? [];` passed as `rules={rules()}` → the `()` call dereferences once at render. Use `createMemo(() => endpoint()?.responseRules ?? [])` and pass `rules={rules()}` (memo tracks).
+- `const r = props.rule;` destructuring props to a local variable at top of component → loses reactivity. Access `props.rule` lazily inside JSX, or use `createMemo`/`createEffect`.
+
+**Rule**: any conditional rendering or prop-derived data MUST go through `<Show>`, `<For>`, or `createMemo`. Never plain `if`/`return`/`const` in component body for reactive data.
+
+### Drizzle ORM — relations query API
+
+`db.query.X.findFirst({ with: { relatedTable: true } })` requires explicit `relations()` definitions in schema. Foreign keys (`.references()`) alone are NOT enough — you get `TypeError: Cannot read properties of undefined (reading 'referencedTable')` at runtime (500 error). Always define `relations()` for every table that has relationships.
+
+### API route contracts — keep client and server in sync
+
+`src/lib/client.ts` defines fetch paths; `api/routes/manage/*.ts` defines Hono routes. These must match exactly. Bugs found:
+- Client: `POST /_manage/endpoints/:epId/responses` vs Server: `/:epId` (missing `/responses`) → 404
+- PUT/DELETE mounted at `/_manage/endpoints` but client calls `/_manage/responses/:id` → 404
+
+When adding/changing a route, grep both `client.ts` AND the route file to verify paths match. Consider a shared route constant or an integration test.
+
+### API boundary — type confusion on headers field
+
+`headers` arrives as a JSON **string** from the client (it's `<Input value={headers()}>`). Server must NOT `JSON.stringify()` it again — check `typeof body.headers === "string"` before stringifying. Double-encoding produces `"{\\"Content-Type\\": ...}"` which corrupts response headers.
+
+### Local dev environment — both services must run
+
+`npm run dev` only starts Vite (:5173). The Hono API (:8787) has no standalone dev server — `api/index.ts` only exports a `hono/vercel` serverless handler. For local testing:
+- `npm run dev:api` runs the API on :8787 (via esbuild bundle + `@hono/node-server`, because `tsx` is broken on Node 22.20.0)
+- `DATABASE_URL` must be set in the environment
+- Both processes needed: `pm2 start "npm run dev" --name mock-web-dev` + `pm2 start "npm run dev:api" --name mock-web-api`
+
+### Testing methodology — audit for the same anti-pattern
+
+When a reactivity/route bug is found in one component, immediately grep the entire codebase for the same pattern. Don't discover the same class of bug one-by-one through manual testing. In this session, the `if (!props.x) return` pattern existed in both `Modal.tsx` and `ResponseRuleList.tsx` — finding the second one cost an extra test cycle.
+
+### Process lesson — verify the full stack before UI testing
+
+Before browser-testing, confirm: (1) both servers running, (2) health endpoint returns 200, (3) API + DB connectivity works. Starting browser tests with a broken backend wastes cycles on misattributed "UI bugs" that are actually 500/404 errors.
