@@ -1,8 +1,11 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/_manage/(.*)", "destination": "/api/index" },
-    { "source": "/(.*)", "destination": "/api/index" }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/_manage/(.*)", "dest": "/api/index" },
+    { "src": "^/$", "dest": "/index.html" },
+    { "src": "^/workspace/(.*)", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/api/index" }
   ]
 }
