@@ -6,10 +6,15 @@ import EndpointEditPage from "./pages/EndpointEditPage";
 
 export default function App() {
   return (
-    <Layout>
-      <Route path="/" component={HomePage} />
-      <Route path="/workspace/:id" component={WorkspacePage} />
-      <Route path="/workspace/:id/endpoint/:eid" component={EndpointEditPage} />
-    </Layout>
+    <Route
+      path="/"
+      component={() => (
+        <Layout>
+          <Route path="/" component={HomePage} />
+          <Route path="/workspace/:id" component={WorkspacePage} />
+          <Route path="/workspace/:id/endpoint/:eid" component={EndpointEditPage} />
+        </Layout>
+      )}
+    />
   );
 }

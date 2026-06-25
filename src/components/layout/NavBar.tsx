@@ -1,5 +1,3 @@
-import { A } from "@solidjs/router";
-
 export default function NavBar() {
   return (
     <nav
@@ -16,7 +14,7 @@ export default function NavBar() {
         "z-index": 50,
       }}
     >
-      <A
+      <a
         href="/"
         style={{
           display: "flex",
@@ -32,7 +30,7 @@ export default function NavBar() {
           <path d="M18 4L10 18h5l-1 10 8-14h-5l1-10z" fill="#00d992" />
         </svg>
         MockWeb
-      </A>
+      </a>
     </nav>
   );
 }
