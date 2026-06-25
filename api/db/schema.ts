@@ -1,4 +1,5 @@
 import { pgTable, uuid, text, integer, boolean, timestamp, uniqueIndex, pgEnum } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 
 export const httpMethodEnum = pgEnum("http_method", ["GET", "POST", "PUT", "DELETE", "PATCH"]);
 
@@ -42,3 +43,22 @@ export const responseRules = pgTable("response_rules", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const workspaceRelations = relations(workspaces, ({ many }) => ({
+  endpoints: many(endpoints),
+}));
+
+export const endpointRelations = relations(endpoints, ({ one, many }) => ({
+  workspace: one(workspaces, {
+    fields: [endpoints.workspaceId],
+    references: [workspaces.id],
+  }),
+  responseRules: many(responseRules),
+}));
+
+export const responseRuleRelations = relations(responseRules, ({ one }) => ({
+  endpoint: one(endpoints, {
+    fields: [responseRules.endpointId],
+    references: [endpoints.id],
+  }),
+}));

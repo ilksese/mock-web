@@ -11,7 +11,7 @@ type Variables = {
 const resp = new Hono<{ Variables: Variables }>();
 
 // POST /_manage/endpoints/:epId/responses
-resp.post("/:epId", workspaceAuth, async (c) => {
+resp.post("/:epId/responses", workspaceAuth, async (c) => {
   const epId = c.req.param("epId")!;
   const ws = c.get("workspace");
   const ep = await db.query.endpoints.findFirst({
@@ -33,7 +33,7 @@ resp.post("/:epId", workspaceAuth, async (c) => {
       endpointId: epId,
       conditions: JSON.stringify(body.conditions ?? {}),
       statusCode: body.statusCode ?? 200,
-      headers: JSON.stringify(body.headers ?? { "Content-Type": "application/json" }),
+      headers: typeof body.headers === "string" ? body.headers : JSON.stringify(body.headers ?? { "Content-Type": "application/json" }),
       body: body.body ?? "",
       priority: body.priority ?? 0,
     })
@@ -54,7 +54,7 @@ resp.put("/:id", workspaceAuth, async (c) => {
   const updateData: Record<string, any> = { updatedAt: new Date() };
   if (body.conditions !== undefined) updateData.conditions = JSON.stringify(body.conditions);
   if (body.statusCode !== undefined) updateData.statusCode = body.statusCode;
-  if (body.headers !== undefined) updateData.headers = JSON.stringify(body.headers);
+  if (body.headers !== undefined) updateData.headers = typeof body.headers === "string" ? body.headers : JSON.stringify(body.headers);
   if (body.body !== undefined) updateData.body = body.body;
   if (body.priority !== undefined) updateData.priority = body.priority;
 
