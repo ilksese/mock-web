@@ -19,26 +19,13 @@ interface Rule {
 
 function InfoBarSkeleton() {
   return (
-    <div
-      style={{
-        background: "var(--color-canvas)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-md)",
-        padding: "var(--spacing-lg) var(--spacing-xl)",
-        "margin-bottom": "var(--spacing-2xl)",
-        display: "flex",
-        "align-items": "center",
-        "justify-content": "space-between",
-        "flex-wrap": "wrap",
-        gap: "var(--spacing-md)",
-      }}
-    >
-      <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-md)" }}>
+    <div class="bg-canvas border border-hairline rounded-md py-4 px-5 mb-6 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
         <Skeleton width="50px" height="22px" radius="4px" />
         <Skeleton width="150px" height="20px" radius="4px" />
         <Skeleton width="180px" height="16px" radius="4px" />
       </div>
-      <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+      <div class="flex gap-2">
         <Skeleton width="90px" height="28px" radius="var(--rounded-sm)" />
         <Skeleton width="80px" height="28px" radius="var(--rounded-sm)" />
       </div>
@@ -48,25 +35,18 @@ function InfoBarSkeleton() {
 
 function RuleCardSkeleton() {
   return (
-    <div
-      style={{
-        background: "var(--color-canvas)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-md)",
-        padding: "var(--spacing-2xl)",
-      }}
-    >
-      <div style={{ display: "flex", "justify-content": "space-between", "align-items": "flex-start" }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-sm)", "margin-bottom": "var(--spacing-md)" }}>
+    <div class="bg-canvas border border-hairline rounded-md p-6">
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-3">
             <Skeleton width="30px" height="20px" radius="4px" />
             <Skeleton width="40px" height="22px" radius="4px" />
             <Skeleton width="60px" height="14px" radius="4px" />
           </div>
-          <Skeleton width="80%" height="14px" radius="4px" style={{ "margin-bottom": "var(--spacing-sm)" }} />
+          <Skeleton width="80%" height="14px" radius="4px" class="mb-2" />
           <Skeleton width="90%" height="16px" radius="4px" />
         </div>
-        <div style={{ display: "flex", gap: "4px" }}>
+        <div class="flex gap-1">
           <Skeleton width="40px" height="24px" radius="var(--rounded-sm)" />
           <Skeleton width="36px" height="24px" radius="var(--rounded-sm)" />
         </div>
@@ -122,29 +102,22 @@ export default function EndpointEditPage() {
         </Show>
       </Show>
 
-      <div style={{ display: "flex", "justify-content": "space-between", "align-items": "center", "margin-bottom": "var(--spacing-xl)" }}>
-        <h2 style={{ "font-size": "20px", "font-weight": "600" }}>Response Rules</h2>
+      <div class="flex justify-between items-center mb-5">
+        <h2 class="text-xl font-semibold">Response Rules</h2>
         <Button variant="primary" onClick={handleNew}>+ Add Rule</Button>
       </div>
 
       <Show when={!sectionsLoading()} fallback={
-        <div style={{ display: "flex", "flex-direction": "column", gap: "var(--spacing-md)" }}>
+        <div class="flex flex-col gap-3">
           <For each={[0, 1, 2]}>{() => <RuleCardSkeleton />}</For>
         </div>
       }>
         <Show
           when={rules().length > 0}
           fallback={
-            <div style={{
-              background: "var(--color-canvas-soft)",
-              "border-radius": "var(--rounded-md)",
-              padding: "var(--spacing-3xl)",
-              "text-align": "center",
-              color: "var(--color-mute)",
-              "font-size": "16px",
-            }}>
-              <p style={{ "margin-bottom": "var(--spacing-sm)" }}>No response rules yet</p>
-              <p style={{ "font-size": "14px" }}>Add a response rule to define what this endpoint returns.</p>
+            <div class="bg-canvas-soft rounded-md p-8 text-center text-mute text-base">
+              <p class="mb-2">No response rules yet</p>
+              <p class="text-sm">Add a response rule to define what this endpoint returns.</p>
             </div>
           }
         >

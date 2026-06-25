@@ -4,31 +4,12 @@ import { useToast } from "../../store/toast";
 export default function ToastContainer() {
   const { toasts, remove } = useToast();
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "var(--spacing-3xl)",
-        right: "var(--spacing-3xl)",
-        "z-index": 200,
-        display: "flex",
-        "flex-direction": "column",
-        gap: "var(--spacing-sm)",
-      }}
-    >
+    <div class="fixed top-8 right-8 z-200 flex flex-col gap-2">
       <For each={toasts()}>
         {(t) => (
           <div
             onClick={() => remove(t.id)}
-            style={{
-              background: "var(--color-canvas)",
-              border: "1px solid var(--color-hairline)",
-              "border-radius": "var(--rounded-md)",
-              padding: "var(--spacing-md) var(--spacing-lg)",
-              "font-size": "14px",
-              color: t.type === "error" ? "#f87171" : t.type === "success" ? "var(--color-primary)" : "var(--color-ink)",
-              cursor: "pointer",
-              "min-width": "280px",
-            }}
+            class={`bg-canvas border border-hairline rounded-md py-3 px-4 text-sm cursor-pointer min-w-[280px] ${t.type === "error" ? "text-[#f87171]" : t.type === "success" ? "text-primary" : "text-ink"}`}
           >
             {t.message}
           </div>

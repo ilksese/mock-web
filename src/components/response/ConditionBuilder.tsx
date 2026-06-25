@@ -60,34 +60,34 @@ export default function ConditionBuilder(props: Props) {
   }
 
   return (
-    <div style={{ "font-size": "14px" }}>
-      <div style={{ "margin-bottom": "var(--spacing-md)" }}>
-        <div style={{ display: "flex", "align-items": "center", "justify-content": "space-between", "margin-bottom": "4px" }}>
-          <span style={{ color: "var(--color-mute)", "font-size": "12px", "text-transform": "uppercase", "letter-spacing": "1px" }}>Query Params</span>
-          <Button variant="ghost" onClick={addQuery} style={{ "font-size": "12px", padding: "2px 8px" } as any}>+ Add</Button>
+    <div class="text-sm">
+      <div class="mb-3">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-mute text-xs uppercase tracking-[1px]">Query Params</span>
+          <Button variant="ghost" onClick={addQuery} class="text-xs py-[2px] px-2">+ Add</Button>
         </div>
         <For each={queryPairs()}>
           {(pair, idx) => (
-            <div style={{ display: "flex", gap: "4px", "margin-bottom": "4px" }}>
-              <Input placeholder="key" value={pair.key} onInput={(e) => updateQuery(idx(), "key", e.currentTarget.value)} style={{ flex: 1, padding: "6px 8px" } as any} />
-              <Input placeholder="value" value={pair.value} onInput={(e) => updateQuery(idx(), "value", e.currentTarget.value)} style={{ flex: 1, padding: "6px 8px" } as any} />
-              <Button variant="ghost" onClick={() => removeQuery(idx())} style={{ "font-size": "12px", padding: "4px 6px", color: "#ef4444" } as any}>×</Button>
+            <div class="flex gap-1 mb-1">
+              <Input placeholder="key" value={pair.key} onInput={(e) => updateQuery(idx(), "key", e.currentTarget.value)} class="flex-1 py-1.5 px-2" />
+              <Input placeholder="value" value={pair.value} onInput={(e) => updateQuery(idx(), "value", e.currentTarget.value)} class="flex-1 py-1.5 px-2" />
+              <Button variant="ghost" onClick={() => removeQuery(idx())} class="text-xs py-1 px-1.5 text-[#ef4444]">×</Button>
             </div>
           )}
         </For>
       </div>
 
       <div>
-        <div style={{ display: "flex", "align-items": "center", "justify-content": "space-between", "margin-bottom": "4px" }}>
-          <span style={{ color: "var(--color-mute)", "font-size": "12px", "text-transform": "uppercase", "letter-spacing": "1px" }}>Headers</span>
-          <Button variant="ghost" onClick={addHeader} style={{ "font-size": "12px", padding: "2px 8px" } as any}>+ Add</Button>
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-mute text-xs uppercase tracking-[1px]">Headers</span>
+          <Button variant="ghost" onClick={addHeader} class="text-xs py-[2px] px-2">+ Add</Button>
         </div>
         <For each={headerPairs()}>
           {(pair, idx) => (
-            <div style={{ display: "flex", gap: "4px", "margin-bottom": "4px" }}>
-              <Input placeholder="key" value={pair.key} onInput={(e) => updateHeader(idx(), "key", e.currentTarget.value)} style={{ flex: 1, padding: "6px 8px" } as any} />
-              <Input placeholder="value" value={pair.value} onInput={(e) => updateHeader(idx(), "value", e.currentTarget.value)} style={{ flex: 1, padding: "6px 8px" } as any} />
-              <Button variant="ghost" onClick={() => removeHeader(idx())} style={{ "font-size": "12px", padding: "4px 6px", color: "#ef4444" } as any}>×</Button>
+            <div class="flex gap-1 mb-1">
+              <Input placeholder="key" value={pair.key} onInput={(e) => updateHeader(idx(), "key", e.currentTarget.value)} class="flex-1 py-1.5 px-2" />
+              <Input placeholder="value" value={pair.value} onInput={(e) => updateHeader(idx(), "value", e.currentTarget.value)} class="flex-1 py-1.5 px-2" />
+              <Button variant="ghost" onClick={() => removeHeader(idx())} class="text-xs py-1 px-1.5 text-[#ef4444]">×</Button>
             </div>
           )}
         </For>

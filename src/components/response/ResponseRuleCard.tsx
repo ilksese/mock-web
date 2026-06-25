@@ -30,48 +30,37 @@ export default function ResponseRuleCard(props: Props) {
 
   return (
     <Card>
-      <div style={{ display: "flex", "justify-content": "space-between", "align-items": "flex-start" }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-sm)", "margin-bottom": "var(--spacing-sm)" }}>
-            <span style={{
-              "font-size": "12px",
-              color: "var(--color-mute)",
-              background: "var(--color-canvas-soft)",
-              padding: "2px 8px",
-              "border-radius": "var(--rounded-xs)",
-            }}>
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs text-mute bg-canvas-soft py-[2px] px-2 rounded-xs">
               P{r.priority}
             </span>
             <Badge color={r.statusCode >= 400 ? "#ef4444" : r.statusCode >= 300 ? "#f59e0b" : "#00d992"}>
               {String(r.statusCode)}
             </Badge>
             {isDefault && (
-              <span style={{ "font-size": "12px", color: "var(--color-mute)" }}>Default</span>
+              <span class="text-xs text-mute">Default</span>
             )}
           </div>
           {!isDefault && (
-            <div style={{ "font-size": "13px", color: "var(--color-body)", "margin-bottom": "4px" }}>
+            <div class="text-[13px] text-body mb-1">
               {Object.entries(cond).map(([k, v]) => (
-                <span style={{ "margin-right": "var(--spacing-md)" }}>
+                <span class="mr-3">
                   {k}: {JSON.stringify(v)}
                 </span>
               ))}
             </div>
           )}
-          <code style={{
-            "font-family": "var(--font-mono)",
-            "font-size": "13px",
-            color: "var(--color-canvas-text-soft)",
-            "word-break": "break-all",
-          }}>
+          <code class="font-mono text-[13px] text-canvas-text-soft break-all">
             {bodyPreview || "(empty body)"}
           </code>
         </div>
-        <div style={{ display: "flex", gap: "4px" }}>
-          <Button variant="ghost" onClick={() => props.onEdit(r)} style={{ "font-size": "12px", padding: "4px 8px" } as any}>
+        <div class="flex gap-1">
+          <Button variant="ghost" onClick={() => props.onEdit(r)} class="text-xs py-1 px-2">
             Edit
           </Button>
-          <Button variant="ghost" onClick={() => props.onDelete(r.id)} style={{ "font-size": "12px", padding: "4px 8px", color: "#ef4444" } as any}>
+          <Button variant="ghost" onClick={() => props.onDelete(r.id)} class="text-xs py-1 px-2 text-[#ef4444]">
             Del
           </Button>
         </div>

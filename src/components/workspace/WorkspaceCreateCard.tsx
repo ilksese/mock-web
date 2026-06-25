@@ -32,10 +32,10 @@ export default function WorkspaceCreateCard() {
   };
 
   return (
-    <Card style={{ "max-width": "480px", margin: "0 auto" }}>
+    <Card class="max-w-[480px] mx-auto">
       {!showKey() ? (
         <>
-          <h3 style={{ "font-size": "20px", "font-weight": "600", "margin-bottom": "var(--spacing-lg)" }}>
+          <h3 class="text-xl font-semibold mb-4">
             Create a Workspace
           </h3>
           <Input
@@ -48,17 +48,17 @@ export default function WorkspaceCreateCard() {
             variant="primary"
             onClick={handleCreate}
             disabled={loading()}
-            style={{ "margin-top": "var(--spacing-lg)", width: "100%" }}
+            class="mt-4 w-full"
           >
             {loading() ? "Creating..." : "Create Workspace"}
           </Button>
         </>
       ) : (
         <>
-          <h3 style={{ "font-size": "20px", "font-weight": "600", "margin-bottom": "var(--spacing-sm)", color: "var(--color-primary)" }}>
+          <h3 class="text-xl font-semibold mb-2 text-primary">
             Workspace Created!
           </h3>
-          <p style={{ color: "var(--color-body)", "font-size": "14px", "margin-bottom": "var(--spacing-lg)" }}>
+          <p class="text-body text-sm mb-4">
             Save this manage key — it won't be shown again.
           </p>
           <div
@@ -66,20 +66,11 @@ export default function WorkspaceCreateCard() {
               await navigator.clipboard.writeText(showKey()!);
               toast.add("Key copied!", "success");
             }}
-            style={{
-              background: "var(--color-canvas-soft)",
-              border: "1px solid var(--color-hairline)",
-              "border-radius": "var(--rounded-sm)",
-              padding: "var(--spacing-md) var(--spacing-lg)",
-              "font-family": "var(--font-mono)",
-              "font-size": "13px",
-              "word-break": "break-all",
-              cursor: "pointer",
-            }}
+            class="bg-canvas-soft border border-hairline rounded-sm py-3 px-4 font-mono text-[13px] break-all cursor-pointer"
           >
             {showKey()}
           </div>
-          <p style={{ color: "var(--color-mute)", "font-size": "12px", "margin-top": "var(--spacing-sm)" }}>
+          <p class="text-mute text-xs mt-2">
             Click to copy. Redirecting to workspace...
           </p>
         </>

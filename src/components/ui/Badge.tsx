@@ -15,17 +15,8 @@ export default function Badge(props: BadgeProps) {
   const bg = props.color ?? "#3d3a39";
   return (
     <span
-      style={{
-        display: "inline-block",
-        background: bg,
-        color: bg === "#f59e0b" || bg === "#3b82f6" ? "#fff" : "#101010",
-        "font-family": "var(--font-sans)",
-        "font-size": "12px",
-        "font-weight": "600",
-        "line-height": "16px",
-        padding: "2px 8px",
-        "border-radius": "var(--rounded-pill)",
-      }}
+      class={`inline-block font-sans text-xs font-semibold leading-4 py-[2px] px-2 rounded-pill ${bg === "#f59e0b" || bg === "#3b82f6" ? "text-white" : "text-canvas"}`}
+      style={{ background: bg }}
     >
       {props.children}
     </span>

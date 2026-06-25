@@ -42,45 +42,31 @@ export default function EndpointCard(props: Props) {
 
   return (
     <Card>
-      <div style={{ display: "flex", "align-items": "flex-start", "justify-content": "space-between" }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-sm)", "margin-bottom": "var(--spacing-sm)" }}>
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-2">
             <Badge color={(methodColors as any)[ep().method]}>{ep().method}</Badge>
-            <span style={{ "font-weight": "600", "font-size": "16px" }}>{ep().name}</span>
+            <span class="font-semibold text-base">{ep().name}</span>
           </div>
-          <code
-            style={{
-              "font-family": "var(--font-mono)",
-              "font-size": "13px",
-              color: "var(--color-primary-soft)",
-              "word-break": "break-all",
-            }}
-          >
+          <code class="font-mono text-[13px] text-primary-soft break-all">
             {ep().path}
           </code>
           {ep().delayMs > 0 && (
-            <span
-              style={{
-                display: "inline-block",
-                "margin-left": "var(--spacing-sm)",
-                "font-size": "12px",
-                color: "var(--color-mute)",
-              }}
-            >
+            <span class="inline-block ml-2 text-xs text-mute">
               ⏱ {ep().delayMs}ms
             </span>
           )}
         </div>
-        <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-md)" }}>
+        <div class="flex items-center gap-3">
           <Toggle checked={ep().enabled} onChange={toggle} />
         </div>
       </div>
-      <div style={{ display: "flex", gap: "var(--spacing-sm)", "margin-top": "var(--spacing-lg)" }}>
-        <Button variant="outline" onClick={copyUrl} style={{ "font-size": "13px", padding: "6px 12px" } as any}>
+      <div class="flex gap-2 mt-4">
+        <Button variant="outline" onClick={copyUrl} class="text-[13px] py-1.5 px-3">
           Copy URL
         </Button>
         <A href={`/workspace/${props.workspaceId}/endpoint/${ep().id}`}>
-          <Button variant="ghost" style={{ "font-size": "13px", padding: "6px 12px" } as any}>
+          <Button variant="ghost" class="text-[13px] py-1.5 px-3">
             Edit →
           </Button>
         </A>

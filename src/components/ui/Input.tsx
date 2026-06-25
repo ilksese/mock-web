@@ -1,22 +1,11 @@
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { splitProps, type ComponentProps } from "solid-js";
 
 export default function Input(props: ComponentProps<"input">) {
-  const [local, rest] = splitProps(props, ["style"]);
+  const [local, rest] = splitProps(props, ["class"]);
   return (
     <input
       {...rest}
-      style={{
-        background: "var(--color-canvas-soft)",
-        color: "var(--color-ink)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-sm)",
-        padding: "var(--spacing-md) var(--spacing-lg)",
-        "font-family": "var(--font-sans)",
-        "font-size": "14px",
-        outline: "none",
-        width: "100%",
-        ...(typeof local.style === "object" ? (local.style as JSX.CSSProperties) : {}),
-      }}
+      class={`bg-canvas-soft text-ink border border-hairline rounded-sm py-3 px-4 font-sans text-sm outline-none w-full ${local.class ?? ""}`}
     />
   );
 }

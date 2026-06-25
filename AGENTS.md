@@ -28,7 +28,7 @@ api/   → Hono backend (Vercel serverless)
 src/   → SolidJS SPA
   main.tsx              Render + <Router>
   App.tsx               Layout + <Route>s (no <Routes> wrapper)
-  index.css             CSS custom properties (dark Voltagent theme)
+  index.css             Tailwind v4 `@theme` layer + global styles (dark Voltagent theme)
   components/ui/        Button, Input, Card, Modal, Toast, Badge, CodeBlock, Toggle
   components/layout/    NavBar, Layout
   components/workspace/ WorkspaceCreateCard, WorkspaceHeader
@@ -45,7 +45,7 @@ src/   → SolidJS SPA
 ## Conventions
 
 - **ESM** (`"type": "module"`), all `import`/`export`.
-- **Styling**: Inline styles only, kebab-case property names (`"font-size"` not `fontSize`), CSS custom-property tokens via `var(--color-...)`. Follows the Voltagent design language defined in `DESIGN.md` — dark canvas only (`#101010`), single `#00d992` green accent, hairline borders (`#3d3a39`), Inter + SF Mono font pairing.
+- **Styling**: Tailwind CSS v4 utility classes on `class` attribute (SolidJS JSX). No `style={{}}` props for static styles — only for runtime-dynamic values (e.g., width, color computed from a signal). Design tokens are defined in `src/index.css` via the `@theme` directive (Voltagent dark theme: single `#00d992` accent, Inter + SF Mono fonts). Use semantic utility names: `bg-canvas`, `text-primary`, `border-hairline`, `rounded-sm`, etc. Arbitrary values use `value` syntax for non-standard numbers: `text-[60px]`, `leading-[26px]`, `tracking-[-0.65px]`. Button variants use template literals with variant objects, not `clsx` or `tailwind-variants`. Global resets and the `.sk` skeleton shimmer class are in `src/index.css` via `@layer base` and `@layer components`.
 - **Components**: `export default function Name(props)`, `splitProps` for rest spread.
 - **Router**: `@solidjs/router` v0.16 — `<Route>` directly in JSX, `<A href>`, `useNavigate()`, `useParams<T>()`.
 - **Data**: `createResource(source, fetcher)`, `refetch()` on mutate. Every page/component with async data MUST show skeletons during loading: use `resource.loading` with `<Show when={!resource.loading} fallback={<SkeletonLayout />}>`. Never show empty-state copy ("No items yet") while data is still loading — render it only after `resource.loading` is false and the list is empty.

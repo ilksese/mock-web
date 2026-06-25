@@ -81,35 +81,35 @@ export default function ResponseRuleEditor(props: Props) {
 
   return (
     <Modal open={props.open} onClose={props.onClose} title={isEdit() ? "Edit Response Rule" : "New Response Rule"}>
-      <div style={{ display: "flex", "flex-direction": "column", gap: "var(--spacing-md)" }}>
-        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
-          <div style={{ flex: 1 }}>
-            <label style={{ "font-size": "12px", color: "var(--color-mute)" }}>Status Code</label>
+      <div class="flex flex-col gap-3">
+        <div class="flex gap-2">
+          <div class="flex-1">
+            <label class="text-xs text-mute">Status Code</label>
             <Input type="number" value={String(statusCode())} onInput={(e) => setStatusCode(Number(e.currentTarget.value) || 200)} />
           </div>
-          <div style={{ flex: 1 }}>
-            <label style={{ "font-size": "12px", color: "var(--color-mute)" }}>Priority</label>
+          <div class="flex-1">
+            <label class="text-xs text-mute">Priority</label>
             <Input type="number" value={String(priority())} onInput={(e) => setPriority(Number(e.currentTarget.value) || 0)} />
           </div>
         </div>
 
         <div>
-          <label style={{ "font-size": "12px", color: "var(--color-mute)" }}>Headers (JSON)</label>
+          <label class="text-xs text-mute">Headers (JSON)</label>
           <Input value={headers()} onInput={(e) => setHeaders(e.currentTarget.value)} placeholder='{"Content-Type": "application/json"}' />
         </div>
 
         <div>
-          <label style={{ "font-size": "12px", color: "var(--color-mute)", "margin-bottom": "4px", display: "block" }}>Conditions</label>
+          <label class="text-xs text-mute mb-1 block">Conditions</label>
           <ConditionBuilder conditions={conditions()} onChange={setConditions} />
         </div>
 
         <div>
-          <label style={{ "font-size": "12px", color: "var(--color-mute)", "margin-bottom": "4px", display: "block" }}>Response Body</label>
+          <label class="text-xs text-mute mb-1 block">Response Body</label>
           <BodyEditor value={body()} onChange={setBody} />
         </div>
 
-        <div style={{ display: "flex", gap: "var(--spacing-sm)", "margin-top": "var(--spacing-sm)" }}>
-          <Button variant="primary" onClick={handleSave} disabled={loading()} style={{ flex: 1 } as any}>
+        <div class="flex gap-2 mt-2">
+          <Button variant="primary" onClick={handleSave} disabled={loading()} class="flex-1">
             {loading() ? "Saving..." : "Save"}
           </Button>
           <Button variant="outline" onClick={props.onClose}>Cancel</Button>

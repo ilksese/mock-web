@@ -47,45 +47,27 @@ export default function CreateEndpointModal(props: Props) {
 
   return (
     <Modal open={props.open} onClose={props.onClose} title="Create Endpoint">
-      <div style={{ display: "flex", "flex-direction": "column", gap: "var(--spacing-md)" }}>
+      <div class="flex flex-col gap-3">
         <Input placeholder="Endpoint name (e.g. Get Users)" value={name()} onInput={(e) => setName(e.currentTarget.value)} />
-        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+        <div class="flex gap-2">
           <select
             value={method()}
             onChange={(e) => setMethod(e.currentTarget.value)}
-            style={{
-              background: "var(--color-canvas-soft)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-hairline)",
-              "border-radius": "var(--rounded-sm)",
-              padding: "var(--spacing-md) var(--spacing-lg)",
-              "font-family": "var(--font-sans)",
-              "font-size": "14px",
-              "min-width": "120px",
-            }}
+            class="bg-canvas-soft text-ink border border-hairline rounded-sm py-3 px-4 font-sans text-sm min-w-[120px]"
           >
             {METHODS.map((m) => (
               <option value={m}>{m}</option>
             ))}
           </select>
-          <div style={{ flex: 1, position: "relative" }}>
-            <span
-              style={{
-                position: "absolute",
-                left: "var(--spacing-lg)",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--color-mute)",
-                "font-size": "14px",
-              }}
-            >
+          <div class="flex-1 relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-mute text-sm">
               /
             </span>
             <Input
               placeholder="my-api/users"
               value={path().replace(/^\//, "")}
               onInput={(e) => setPath("/" + e.currentTarget.value.replace(/^\//, ""))}
-              style={{ "padding-left": "28px" } as any}
+              class="pl-7"
             />
           </div>
         </div>
@@ -95,8 +77,8 @@ export default function CreateEndpointModal(props: Props) {
           value={delayMs() === 0 ? "" : String(delayMs())}
           onInput={(e) => setDelayMs(Number(e.currentTarget.value) || 0)}
         />
-        <div style={{ display: "flex", gap: "var(--spacing-sm)", "margin-top": "var(--spacing-sm)" }}>
-          <Button variant="primary" onClick={handleCreate} disabled={loading()} style={{ flex: 1 } as any}>
+        <div class="flex gap-2 mt-2">
+          <Button variant="primary" onClick={handleCreate} disabled={loading()} class="flex-1">
             {loading() ? "Creating..." : "Create"}
           </Button>
           <Button variant="outline" onClick={props.onClose}>

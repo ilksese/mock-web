@@ -8,46 +8,14 @@ export default function HomePage() {
 
   return (
     <div>
-      <section
-        style={{
-          "text-align": "center",
-          padding: "var(--spacing-5xl) 0",
-        }}
-      >
-        <p
-          style={{
-            "font-family": "var(--font-sans)",
-            "font-size": "14px",
-            "font-weight": "600",
-            "letter-spacing": "2.52px",
-            color: "var(--color-mute)",
-            "margin-bottom": "var(--spacing-lg)",
-            "text-transform": "uppercase",
-          }}
-        >
+      <section class="text-center py-12">
+        <p class="font-sans text-sm font-semibold tracking-[2.52px] text-mute mb-4 uppercase">
           Online Mock API Platform
         </p>
-        <h1
-          style={{
-            "font-family": "var(--font-sans)",
-            "font-size": "60px",
-            "font-weight": "400",
-            "line-height": "60px",
-            "letter-spacing": "-0.65px",
-            color: "var(--color-ink-strong)",
-            "margin-bottom": "var(--spacing-lg)",
-          }}
-        >
+        <h1 class="font-sans text-[60px] font-normal leading-[60px] tracking-[-0.65px] text-ink-strong mb-4">
           Mock APIs in Seconds
         </h1>
-        <p
-          style={{
-            "font-size": "18px",
-            color: "var(--color-body)",
-            "max-width": "600px",
-            margin: "0 auto var(--spacing-4xl)",
-          }}
-        >
+        <p class="text-lg text-body max-w-[600px] mx-auto mb-10">
           Create custom endpoints, define responses with status codes and
           headers, and start testing immediately — no deployment, no config.
         </p>
@@ -56,25 +24,15 @@ export default function HomePage() {
       <WorkspaceCreateCard />
 
       {recents().length > 0 && (
-        <section style={{ "max-width": "480px", margin: "var(--spacing-4xl) auto 0" }}>
-          <h3 style={{ "font-size": "14px", "font-weight": "600", "text-transform": "uppercase", "letter-spacing": "1px", color: "var(--color-mute)", "margin-bottom": "var(--spacing-lg)" }}>
+        <section class="max-w-[480px] mx-auto mt-10">
+          <h3 class="text-sm font-semibold uppercase tracking-[1px] text-mute mb-4">
             Recent Workspaces
           </h3>
-          <div style={{ display: "flex", "flex-direction": "column", gap: "var(--spacing-sm)" }}>
+          <div class="flex flex-col gap-2">
             {recents().map((ws) => (
               <A
                 href={`/workspace/${ws.id}`}
-                style={{
-                  display: "block",
-                  padding: "var(--spacing-md) var(--spacing-lg)",
-                  background: "var(--color-canvas-soft)",
-                  border: "1px solid var(--color-hairline)",
-                  "border-radius": "var(--rounded-sm)",
-                  "text-decoration": "none",
-                  color: "var(--color-ink-strong)",
-                  "font-size": "14px",
-                  transition: "border-color 0.15s",
-                }}
+                class="block py-3 px-4 bg-canvas-soft border border-hairline rounded-sm no-underline text-ink-strong text-sm transition-colors"
               >
                 {ws.name}
               </A>
@@ -83,14 +41,7 @@ export default function HomePage() {
         </section>
       )}
 
-      <div
-        style={{
-          "text-align": "center",
-          "margin-top": "var(--spacing-4xl)",
-          color: "var(--color-mute)",
-          "font-size": "14px",
-        }}
-      >
+      <div class="text-center mt-10 text-mute text-sm">
         <p>Workspaces are managed via Bearer token. No account required.</p>
       </div>
     </div>

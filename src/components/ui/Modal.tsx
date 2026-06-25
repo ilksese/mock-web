@@ -17,32 +17,14 @@ export default function Modal(props: ModalProps) {
   return (
     <Show when={props.open}>
       <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          "z-index": 100,
-          display: "flex",
-          "align-items": "center",
-          "justify-content": "center",
-          background: "rgba(0,0,0,0.6)",
-        }}
+        class="fixed inset-0 z-100 flex items-center justify-center"
+        style={{ background: "rgba(0,0,0,0.6)" }}
         onClick={(e) => {
           if (e.target === e.currentTarget) props.onClose();
         }}
       >
-        <div
-          style={{
-            background: "var(--color-canvas)",
-            border: "1px solid var(--color-hairline)",
-            "border-radius": "var(--rounded-md)",
-            padding: "var(--spacing-2xl)",
-            "min-width": "420px",
-            "max-width": "90vw",
-            "max-height": "90vh",
-            overflow: "auto",
-          }}
-        >
-          <h2 style={{ "font-size": "20px", "font-weight": "600", "margin-bottom": "var(--spacing-lg)" }}>{props.title}</h2>
+        <div class="bg-canvas border border-hairline rounded-md p-6 min-w-[420px] max-w-[90vw] max-h-[90vh] overflow-auto">
+          <h2 class="text-xl font-semibold mb-4">{props.title}</h2>
           {props.children}
         </div>
       </div>

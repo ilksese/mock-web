@@ -14,35 +14,22 @@ export default function EndpointInfoBar(props: Props) {
   const curl = `curl -X ${props.method} ${url}`;
 
   return (
-    <div
-      style={{
-        background: "var(--color-canvas)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-md)",
-        padding: "var(--spacing-lg) var(--spacing-xl)",
-        "margin-bottom": "var(--spacing-2xl)",
-        display: "flex",
-        "align-items": "center",
-        "justify-content": "space-between",
-        "flex-wrap": "wrap",
-        gap: "var(--spacing-md)",
-      }}
-    >
-      <div style={{ display: "flex", "align-items": "center", gap: "var(--spacing-md)" }}>
+    <div class="bg-canvas border border-hairline rounded-md py-4 px-5 mb-6 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
         <Badge color={(methodColors as any)[props.method]}>{props.method}</Badge>
-        <span style={{ "font-weight": "600" }}>{props.name}</span>
-        <code style={{ "font-family": "var(--font-mono)", "font-size": "13px", color: "var(--color-primary-soft)" }}>
+        <span class="font-semibold">{props.name}</span>
+        <code class="font-mono text-[13px] text-primary-soft">
           {props.path}
         </code>
       </div>
-      <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+      <div class="flex gap-2">
         <Button
           variant="outline"
           onClick={async () => {
             await navigator.clipboard.writeText(curl);
             toast.add("cURL copied!", "success");
           }}
-          style={{ "font-size": "13px", padding: "6px 12px" } as any}
+          class="text-[13px] py-1.5 px-3"
         >
           Copy cURL
         </Button>
@@ -52,7 +39,7 @@ export default function EndpointInfoBar(props: Props) {
             await navigator.clipboard.writeText(url);
             toast.add("URL copied!", "success");
           }}
-          style={{ "font-size": "13px", padding: "6px 12px" } as any}
+          class="text-[13px] py-1.5 px-3"
         >
           Copy URL
         </Button>

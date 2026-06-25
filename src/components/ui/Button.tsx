@@ -1,4 +1,4 @@
-import { splitProps, type ComponentProps, type JSX } from "solid-js";
+import { splitProps, type ComponentProps } from "solid-js";
 
 type Variant = "primary" | "outline" | "ghost" | "pill";
 
@@ -7,45 +7,20 @@ interface ButtonProps extends ComponentProps<"button"> {
 }
 
 export default function Button(props: ButtonProps) {
-  const [local, rest] = splitProps(props, ["variant", "children", "style"]);
+  const [local, rest] = splitProps(props, ["variant", "children", "class"]);
   const v = local.variant ?? "primary";
 
-  const baseStyle: JSX.CSSProperties = {
-    "font-family": "var(--font-sans)",
-    "font-size": "16px",
-    "font-weight": "600",
-    "line-height": "24px",
-    padding: v === "pill" ? "var(--spacing-xs) var(--spacing-md)" : "var(--spacing-md) var(--spacing-lg)",
-    "border-radius": v === "pill" ? "var(--rounded-pill)" : "var(--rounded-sm)",
-    cursor: "pointer",
-    border: "none",
-    display: "inline-flex",
-    "align-items": "center",
-    "justify-content": "center",
-  };
+  const base = "font-sans font-semibold text-base leading-6 cursor-pointer inline-flex items-center justify-center border-none";
 
-  if (v === "primary") {
-    baseStyle.background = "var(--color-primary)";
-    baseStyle.color = "var(--color-on-primary)";
-  } else if (v === "outline") {
-    baseStyle.background = "var(--color-canvas)";
-    baseStyle.color = "var(--color-ink)";
-    baseStyle.border = "1px solid var(--color-hairline)";
-  } else if (v === "ghost") {
-    baseStyle.background = "transparent";
-    baseStyle.color = "var(--color-primary-soft)";
-  } else if (v === "pill") {
-    baseStyle.background = "var(--color-canvas)";
-    baseStyle.color = "var(--color-ink)";
-    baseStyle.border = "1px solid var(--color-hairline)";
-    baseStyle["font-size"] = "14px";
-  }
+  const variantClass = {
+    primary: "bg-primary text-on-primary rounded-sm py-3 px-4",
+    outline: "bg-canvas text-ink border border-hairline rounded-sm py-3 px-4",
+    ghost: "bg-transparent text-primary-soft rounded-sm py-3 px-4",
+    pill: "bg-canvas text-ink border border-hairline rounded-pill text-sm py-1 px-3",
+  }[v];
 
   return (
-    <button
-      {...rest}
-      style={{ ...baseStyle, ...(typeof local.style === "object" ? (local.style as JSX.CSSProperties) : {}) }}
-    >
+    <button {...rest} class={`${base} ${variantClass} ${local.class ?? ""}`}>
       {local.children}
     </button>
   );

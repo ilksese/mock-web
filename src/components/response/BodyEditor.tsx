@@ -9,19 +9,7 @@ export default function BodyEditor(props: Props) {
       value={props.value}
       onInput={(e) => props.onChange(e.currentTarget.value)}
       rows={15}
-      style={{
-        width: "100%",
-        background: "var(--color-canvas-soft)",
-        color: "var(--color-canvas-text-soft)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-md)",
-        padding: "var(--spacing-xl)",
-        "font-family": "var(--font-mono)",
-        "font-size": "13px",
-        "line-height": "18px",
-        resize: "vertical",
-        outline: "none",
-      }}
+      class="w-full bg-canvas-soft text-canvas-text-soft border border-hairline rounded-md p-5 font-mono text-[13px] leading-[18px] resize-y outline-none"
       placeholder='{"message": "Hello World"}'
       spellcheck={false}
     />

@@ -42,43 +42,22 @@ export default function WorkspaceHeader(props: Props) {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          "align-items": "center",
-          "justify-content": "space-between",
-          "margin-bottom": "var(--spacing-3xl)",
-        }}
-      >
+      <div class="flex items-center justify-between mb-8">
         <div>
-          <h1 style={{ "font-size": "24px", "font-weight": "700", color: "var(--color-ink-strong)" }}>
+          <h1 class="text-2xl font-bold text-ink-strong">
             {props.name}
           </h1>
-          <p style={{ color: "var(--color-mute)", "font-size": "13px", "margin-top": "4px" }}>
-            Manage key: <code style={{ "font-family": "var(--font-mono)", "font-size": "12px" }}>{props.manageKey.slice(0, 12)}...</code>
+          <p class="text-mute text-[13px] mt-1">
+            Manage key: <code class="font-mono text-xs">{props.manageKey.slice(0, 12)}...</code>
           </p>
         </div>
-        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+        <div class="flex gap-2">
           <Button variant="outline" onClick={copyKey}>
             {copied() ? "Copied!" : "Copy Key"}
           </Button>
           <button
             onClick={openConfirm}
-            style={{
-              "font-family": "var(--font-sans)",
-              "font-size": "16px",
-              "font-weight": "600",
-              "line-height": "24px",
-              padding: "var(--spacing-md) var(--spacing-lg)",
-              "border-radius": "var(--rounded-sm)",
-              cursor: "pointer",
-              background: "transparent",
-              color: "#ef4444",
-              border: "1px solid #ef4444",
-              display: "inline-flex",
-              "align-items": "center",
-              "justify-content": "center",
-            }}
+            class="font-sans font-semibold text-base leading-6 py-3 px-4 rounded-sm cursor-pointer bg-transparent text-[#ef4444] border border-[#ef4444] inline-flex items-center justify-center"
           >
             Delete Workspace
           </button>
@@ -86,10 +65,10 @@ export default function WorkspaceHeader(props: Props) {
       </div>
 
       <Modal open={confirmOpen()} onClose={() => setConfirmOpen(false)} title="Delete Workspace">
-        <p style={{ color: "var(--color-body)", "font-size": "14px", "margin-bottom": "var(--spacing-lg)" }}>
-          This will permanently delete <strong style={{ color: "var(--color-ink-strong)" }}>{props.name}</strong> and all endpoints and response rules inside it. This action cannot be undone.
+        <p class="text-body text-sm mb-4">
+          This will permanently delete <strong class="text-ink-strong">{props.name}</strong> and all endpoints and response rules inside it. This action cannot be undone.
         </p>
-        <p style={{ color: "var(--color-mute)", "font-size": "13px", "margin-bottom": "var(--spacing-md)" }}>
+        <p class="text-mute text-[13px] mb-3">
           Type the workspace name to confirm:
         </p>
         <Input
@@ -98,31 +77,15 @@ export default function WorkspaceHeader(props: Props) {
           onInput={(e) => setConfirmName(e.currentTarget.value)}
           onKeyDown={(e) => e.key === "Enter" && confirmName() === props.name && handleDelete()}
         />
-        <div style={{ display: "flex", gap: "var(--spacing-sm)", "margin-top": "var(--spacing-lg)" }}>
+        <div class="flex gap-2 mt-4">
           <button
             onClick={handleDelete}
             disabled={confirmName() !== props.name || deleting()}
-            style={{
-              flex: 1,
-              "font-family": "var(--font-sans)",
-              "font-size": "16px",
-              "font-weight": "600",
-              "line-height": "24px",
-              padding: "var(--spacing-md) var(--spacing-lg)",
-              "border-radius": "var(--rounded-sm)",
-              cursor: confirmName() === props.name && !deleting() ? "pointer" : "not-allowed",
-              background: confirmName() === props.name ? "#ef4444" : "var(--color-canvas-soft)",
-              color: confirmName() === props.name ? "#ffffff" : "var(--color-mute)",
-              border: "none",
-              display: "inline-flex",
-              "align-items": "center",
-              "justify-content": "center",
-              opacity: confirmName() === props.name ? 1 : 0.5,
-            }}
+            class={`flex-1 font-sans font-semibold text-base leading-6 py-3 px-4 rounded-sm cursor-pointer inline-flex items-center justify-center border-none ${confirmName() === props.name ? "bg-[#ef4444] text-white cursor-pointer opacity-100" : "bg-canvas-soft text-mute cursor-not-allowed opacity-50"}`}
           >
             {deleting() ? "Deleting..." : "Delete"}
           </button>
-          <Button variant="outline" onClick={() => setConfirmOpen(false)} style={{ flex: 1 }}>
+          <Button variant="outline" onClick={() => setConfirmOpen(false)} class="flex-1">
             Cancel
           </Button>
         </div>

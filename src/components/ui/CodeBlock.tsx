@@ -1,29 +1,11 @@
-import type { JSX } from "solid-js";
-
 interface CodeBlockProps {
   children: string;
-  style?: JSX.CSSProperties;
+  class?: string;
 }
 
 export default function CodeBlock(props: CodeBlockProps) {
   return (
-    <pre
-      style={{
-        background: "var(--color-canvas-soft)",
-        color: "var(--color-canvas-text-soft)",
-        border: "1px solid var(--color-hairline)",
-        "border-radius": "var(--rounded-md)",
-        padding: "var(--spacing-xl)",
-        "font-family": "var(--font-mono)",
-        "font-size": "13px",
-        "line-height": "18px",
-        overflow: "auto",
-        "white-space": "pre-wrap",
-        "word-break": "break-word",
-        margin: 0,
-        ...props.style,
-      }}
-    >
+    <pre class={`bg-canvas-soft text-canvas-text-soft border border-hairline rounded-md p-5 font-mono text-[13px] leading-[18px] overflow-auto whitespace-pre-wrap break-words m-0 ${props.class ?? ""}`}>
       {props.children}
     </pre>
   );
