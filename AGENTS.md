@@ -45,10 +45,10 @@ src/   → SolidJS SPA
 ## Conventions
 
 - **ESM** (`"type": "module"`), all `import`/`export`.
-- **Styling**: Inline styles only, kebab-case property names (`"font-size"` not `fontSize`), CSS custom-property tokens via `var(--color-...)`.
+- **Styling**: Inline styles only, kebab-case property names (`"font-size"` not `fontSize`), CSS custom-property tokens via `var(--color-...)`. Follows the Voltagent design language defined in `DESIGN.md` — dark canvas only (`#101010`), single `#00d992` green accent, hairline borders (`#3d3a39`), Inter + SF Mono font pairing.
 - **Components**: `export default function Name(props)`, `splitProps` for rest spread.
 - **Router**: `@solidjs/router` v0.16 — `<Route>` directly in JSX, `<A href>`, `useNavigate()`, `useParams<T>()`.
-- **Data**: `createResource(source, fetcher)`, `refetch()` on mutate.
+- **Data**: `createResource(source, fetcher)`, `refetch()` on mutate. Every page/component with async data MUST show skeletons during loading: use `resource.loading` with `<Show when={!resource.loading} fallback={<SkeletonLayout />}>`. Never show empty-state copy ("No items yet") while data is still loading — render it only after `resource.loading` is false and the list is empty.
 - **State**: `createSignal` local; module-level signal + hook for global state.
 - **Backend**: `c.json({ error, details }, status)`. 400 validation, 401 auth, 404 not-found.
 - **DB**: Drizzle query API for reads, `insert/update/delete` for writes. UUID via `defaultRandom()`.
@@ -100,3 +100,23 @@ When a reactivity/route bug is found in one component, immediately grep the enti
 ### Process lesson — verify the full stack before UI testing
 
 Before browser-testing, confirm: (1) both servers running, (2) health endpoint returns 200, (3) API + DB connectivity works. Starting browser tests with a broken backend wastes cycles on misattributed "UI bugs" that are actually 500/404 errors.
+
+### Skeleton screens — mandatory for async data loading (2026-06-25)
+
+Every page or component that loads data via `createResource` MUST render skeleton placeholders during loading. This prevents layout shift and misleading empty-state copy.
+
+**Required pattern** (three-state rendering):
+```tsx
+// NEVER: <Show when={data()}>  — lumps loading and empty together
+// INSTEAD:
+<Show when={!data.loading} fallback={<Skeleton />}>
+  <Show when={data()} fallback={<EmptyState />}>
+    <RealContent />
+  </Show>
+</Show>
+```
+
+- `Skeleton` component: `src/components/ui/Skeleton.tsx` — width/height/radius props, CSS shimmer animation
+- Skeleton layout MUST mimic the real component's dimensions and structure to avoid layout shift
+- Use fixed skeleton item counts (4 endpoint cards, 3 rule cards) — not adaptive
+- Empty-state copy ("No endpoints yet") renders ONLY after loading completes AND data is empty
